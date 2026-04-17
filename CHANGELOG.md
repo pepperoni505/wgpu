@@ -83,6 +83,7 @@ By @teoxoy in [#9351](https://github.com/gfx-rs/wgpu/pull/9351).
 
 - Added support for GLSL passthrough. By @inner-daemons in [#9064](https://github.com/gfx-rs/wgpu/pull/9064).
 - Implement `Adapter::new_external()` for WebGL2 (just like EGL/WGL) to import an external WebGL2 rendering context, and expose the imported context back through `Adapter::adapter_context()` / `Device::context()`. By @pepperoni505 in [#9438](https://github.com/gfx-rs/wgpu/pull/9438).
+- Add `Texture::raw_handle()` to the GLES backend. By @pepperoni505.
 
 #### DX12
 

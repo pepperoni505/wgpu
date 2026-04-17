@@ -447,6 +447,14 @@ impl Texture {
         }
     }
 
+    /// Returns `None` for renderbuffer-backed textures and the default framebuffer marker.
+    pub fn raw_handle(&self) -> Option<glow::Texture> {
+        match self.inner {
+            TextureInner::Texture { raw, .. } => Some(raw),
+            _ => None,
+        }
+    }
+
     /// Returns the `target`, whether the image is 3d and whether the image is a cubemap.
     fn get_info_from_desc(desc: &TextureDescriptor) -> u32 {
         match desc.dimension {
