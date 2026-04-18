@@ -1,3 +1,4 @@
+use objc2::rc::Retained;
 use objc2::runtime::{AnyObject, ProtocolObject, Sel};
 use objc2::{available, sel};
 use objc2_foundation::{NSOperatingSystemVersion, NSProcessInfo};
@@ -67,6 +68,21 @@ unsafe impl Sync for super::Adapter {}
 impl super::Adapter {
     pub(super) fn new(shared: Arc<super::AdapterShared>) -> Self {
         Self { shared }
+    }
+
+    /// Creates a new external adapter from an existing `MTLDevice`.
+    ///
+    /// # Safety
+    ///
+    /// - The underlying `MTLDevice` must be valid.
+    /// - The underlying `MTLDevice` must be valid when interfacing with any objects returned by
+    ///   wgpu-hal from this adapter.
+    /// - The underlying `MTLDevice` must be valid when dropping this adapter and when
+    ///   dropping any objects returned from this adapter.
+    pub unsafe fn new_external(
+        device: Retained<ProtocolObject<dyn MTLDevice>>,
+    ) -> crate::ExposedAdapter<super::Api> {
+        super::AdapterShared::expose(device)
     }
 }
 
